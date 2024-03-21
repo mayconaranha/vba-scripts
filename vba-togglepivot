@@ -1,0 +1,23 @@
+Sub Add_Row_Field()
+'Remove all Row fields and add the Row field to the pivot table.
+'The field is determined by the button text that calls the macro.
+
+Dim pt As PivotTable
+Dim pf As PivotField
+Dim sField As String
+
+  'Set variables
+  Set pt = ActiveSheet.PivotTables(1)
+  sField = ActiveSheet.Shapes(Application.Caller).TextFrame.Characters.Text
+  
+  'Remove existing fields
+  For Each pf In pt.RowFields
+    If pf.Name <> "Values" Then
+      pf.Orientation = xlHidden
+    End If
+  Next pf
+  
+  'Add field that button was clicked for
+  pt.PivotFields(sField).Orientation = xlRowField
+
+End Sub
